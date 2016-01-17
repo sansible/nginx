@@ -1,0 +1,11 @@
+---
+
+- name: Install Nginx
+  include: build.yml
+  tags:
+    - build
+
+- name: Configure Nginx
+  include: configure.yml
+  tags:
+    - configure

@@ -1,0 +1,62 @@
+user www-data;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format main '$http_host '
+        '$remote_addr [$time_local] '
+        '"$request" $status $body_bytes_sent '
+        '"$http_referer" "$http_user_agent" '
+        '$request_time '
+        '$upstream_response_time '
+        '"$http_x_user" "$http_x_request_id"';
+
+    access_log  /var/log/nginx/access.log main;
+
+    sendfile        on;
+
+    server_tokens off;
+
+    keepalive_timeout  65;
+    tcp_nodelay        on;
+
+    gzip  on;
+
+    # Check for pre-gzipped files first
+    gzip_static on;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_proxied any;
+    gzip_min_length  1100;
+    gzip_buffers 16 8k;
+    gzip_types text/plain text/css application/x-javascript \
+    text/xml application/xml application/xml+rss text/javascript;
+    # Some version of IE 6 don't handle compression well on some mime-types,
+    # so just disable for them
+    gzip_disable "MSIE [1-6].(?!.*SV1)";
+    # Set a vary header so downstream proxies don't send cached gzipped
+    # content to IE6
+    gzip_vary on;
+
+    # default proxy settings
+    proxy_redirect off;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header HTTP_AUTHORIZATION $http_authorization;
+    proxy_max_temp_file_size 0;
+
+    server_names_hash_bucket_size 128;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}

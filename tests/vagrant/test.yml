@@ -1,0 +1,22 @@
+---
+
+- name: Test PHP role
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        cache_valid_time: 1800
+        update_cache: yes
+      tags:
+        - build
+
+  roles:
+    - name: ansible-city.nginx
+
+  post_tasks:
+    - name: Nginx should be installed
+      command: nginx -v
+      tags:
+        - assert

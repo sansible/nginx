@@ -1,0 +1,5 @@
+---
+
+- name: ansible-city.nginx
+  src: git+git@github.com:ansible-city/nginx.git
+  version: origin/master

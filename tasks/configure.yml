@@ -1,0 +1,34 @@
+---
+
+- name: configure nginx service
+  become: yes
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
+
+- name: Removes default site
+  become: yes
+  command: "rm -f {{ item }}"
+  args:
+    removes: "{{ item }}"
+  with_items:
+    - /etc/nginx/sites-enabled/default
+    - /etc/nginx/sites-available/default
+  notify:
+    - reload nginx
+
+- name: configure nginx status include
+  become: yes
+  template:
+    src: includes/nginx_status.j2
+    dest: /etc/nginx/includes/nginx_status
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload nginx
