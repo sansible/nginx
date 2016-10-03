@@ -13,7 +13,7 @@
         - build
 
   roles:
-    - name: ansible-city.nginx
+    - role: sansible.nginx
 
   post_tasks:
     - name: Nginx should be installed

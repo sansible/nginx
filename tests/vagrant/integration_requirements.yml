@@ -1,4 +1,4 @@
 ---
 
-- name: ansible-city.nginx
+- name: sansible.nginx
   version: v1.0

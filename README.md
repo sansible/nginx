@@ -1,7 +1,7 @@
 # Nginx
 
-Master: [![Build Status](https://travis-ci.org/ansible-city/nginx.svg?branch=master)](https://travis-ci.org/ansible-city/nginx)  
-Develop: [![Build Status](https://travis-ci.org/ansible-city/nginx.svg?branch=develop)](https://travis-ci.org/ansible-city/nginx)
+Master: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=master)](https://travis-ci.org/sansible/nginx)  
+Develop: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=develop)](https://travis-ci.org/sansible/nginx)
 
 * [ansible.cfg](#ansible-cfg)
 * [Installation and Dependencies](#installation-and-dependencies)
@@ -30,11 +30,11 @@ hash_behaviour = merge
 
 This role has no dependencies.
 
-To install run `ansible-galaxy install ansible-city.nginx` or add this to your
+To install run `ansible-galaxy install sansible.nginx` or add this to your
 `roles.yml`
 
 ```YAML
-- name: ansible-city.nginx
+- name: sansible.nginx
   version: v1.0
 ```
 
@@ -71,5 +71,5 @@ To simply install Java:
         - build
 
   roles:
-    - name: ansible-city.nginx
+    - role: sansible.nginx
 ```
