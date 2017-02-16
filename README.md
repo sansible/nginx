@@ -1,6 +1,6 @@
 # Nginx
 
-Master: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=master)](https://travis-ci.org/sansible/nginx)  
+Master: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=master)](https://travis-ci.org/sansible/nginx)
 Develop: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=develop)](https://travis-ci.org/sansible/nginx)
 
 * [ansible.cfg](#ansible-cfg)
@@ -8,7 +8,7 @@ Develop: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=develo
 * [Tags](#tags)
 * [Examples](#examples)
 
-Installs nginx.
+Installs and configures nginx.
 
 
 
@@ -55,7 +55,7 @@ This role uses two tags: **build** and **configure**
 
 ## Examples
 
-To simply install Java:
+To simply install Nginx:
 
 ```YAML
 - name: Install Nginx
