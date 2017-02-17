@@ -1,6 +1,6 @@
 ---
 
-- name: configure nginx service
+- name: Configure nginx service
   become: yes
   template:
     src: nginx.conf.j2
@@ -13,16 +13,13 @@
 
 - name: Removes default site
   become: yes
-  command: "rm -f {{ item }}"
-  args:
-    removes: "{{ item }}"
-  with_items:
-    - /etc/nginx/sites-enabled/default
-    - /etc/nginx/sites-available/default
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
   notify:
     - reload nginx
 
-- name: configure nginx status include
+- name: Configure nginx status include
   become: yes
   template:
     src: includes/nginx_status.j2
