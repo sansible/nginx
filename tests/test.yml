@@ -20,3 +20,29 @@
       command: nginx -v
       tags:
         - assert
+
+    - name: Enable default site
+      become: yes
+      file:
+        dest: /etc/nginx/sites-enabled/default
+        force: yes
+        src: /etc/nginx/sites-available/default
+        state: link
+      tags:
+        - assert
+
+    - name: Restart nginx
+      become: yes
+      service:
+        name: nginx
+        state: restarted
+      tags:
+        - assert
+
+    - name: Nginx should be listening on port 80
+      wait_for:
+        port: 80
+        state: started
+        timeout: 10
+      tags:
+        - assert

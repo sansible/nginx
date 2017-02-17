@@ -1,0 +1,5 @@
+---
+
+nginx:
+  # Options are standard or json
+  access_log_format: json
