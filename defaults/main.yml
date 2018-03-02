@@ -1,5 +1,17 @@
 ---
 
-nginx:
-  # Options are standard or json
-  access_log_format: json
+# Options are standard or json
+sansible_nginx_access_log_format: json
+sansible_nginx_gzip: "on"
+sansible_nginx_gzip_comp_level: 2
+sansible_nginx_gzip_min_length: 1100
+sansible_nginx_gzip_static: "on"
+sansible_nginx_gzip_types: |
+    text/plain text/css application/x-javascript \
+    text/xml application/xml application/xml+rss text/javascript
+sansible_nginx_gzip_vary: "on"
+sansible_nginx_log_level: error
+sansible_nginx_version: ~
+sansible_nginx_worker_connections: 256
+sansible_nginx_worker_processes: 1
+sansible_nginx_worker_rlimit_nofile: 4096
