@@ -1,10 +1,20 @@
 ---
 
+- name: Add Nginx repository
+  become: yes
+  apt_repository:
+    repo: ppa:nginx/stable
+    state: present
+    validate_certs: no
+
 - name: Ensure latest nginx and supporting packages are installed
   become: yes
   apt:
-    pkg: nginx
+    pkg: "{{ item }}"
     state: present
+  with_items:
+    - "{{ 'nginx=' + sansible_nginx_version if sansible_nginx_version else 'nginx' }}"
+    - "{{ 'nginx-extras=' + sansible_nginx_version if sansible_nginx_version else 'nginx-extras' }}"
 
 - name: Ensure includes folder exists
   become: yes

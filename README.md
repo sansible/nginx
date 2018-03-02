@@ -3,25 +3,11 @@
 Master: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=master)](https://travis-ci.org/sansible/nginx)
 Develop: [![Build Status](https://travis-ci.org/sansible/nginx.svg?branch=develop)](https://travis-ci.org/sansible/nginx)
 
-* [ansible.cfg](#ansible-cfg)
 * [Installation and Dependencies](#installation-and-dependencies)
 * [Tags](#tags)
 * [Examples](#examples)
 
 Installs and configures nginx.
-
-
-
-
-## ansible.cfg
-
-This role is designed to work with merge "hash_behaviour". Make sure your
-ansible.cfg contains these settings
-
-```INI
-[defaults]
-hash_behaviour = merge
-```
 
 
 
@@ -92,6 +78,5 @@ The default access log format is in JSON, to use the standard txt format:
 
   roles:
     - role: sansible.nginx
-      nginx:
-        access_log_format: standard
+      sansible_nginx_access_log_format: standard
 ```

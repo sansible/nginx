@@ -1,18 +1,21 @@
 user www-data;
-worker_processes  1;
+worker_processes {{ sansible_nginx_worker_processes }};
+worker_rlimit_nofile {{ sansible_nginx_worker_rlimit_nofile }};
 
-error_log  /var/log/nginx/error.log;
-pid        /var/run/nginx.pid;
+error_log  /var/log/nginx/error.log {{ sansible_nginx_log_level }};
+pid		/var/run/sansible_nginx_pid;
+
+include /etc/nginx/modules-enabled/*.conf;
 
 events {
-    worker_connections  1024;
+	worker_connections {{ sansible_nginx_worker_connections }};
 }
 
 http {
-    include /etc/nginx/mime.types;
-    default_type  application/octet-stream;
+	include /etc/nginx/mime.types;
+	default_type  application/octet-stream;
 
-{% if nginx.access_log_format == 'json' %}
+{% if sansible_nginx_access_log_format == 'json' %}
 
 	log_format main '{ '
 		'"http_host": "$http_host", '
@@ -31,55 +34,58 @@ http {
 		'"request_id": "$http_x_request_id" '
 	'}';
 
-{% elif nginx.access_log_format == 'standard' %}
+{% elif sansible_nginx_access_log_format == 'standard' %}
 
-    log_format main '$http_host '
-        '$remote_addr [$time_local] '
-        '"$request" $status $body_bytes_sent '
-        '"$http_referer" "$http_user_agent" '
-        '$request_time '
-        '$upstream_response_time '
-        '"$http_x_user" "$http_x_request_id"';
+	log_format main '$http_host '
+		'$remote_addr [$time_local] '
+		'"$request" $status $body_bytes_sent '
+		'"$http_referer" "$http_user_agent" '
+		'$request_time '
+		'$upstream_response_time '
+		'"$http_x_user" "$http_x_request_id"';
 
 {% endif %}
 
-    access_log  /var/log/nginx/access.log main;
+	access_log  /var/log/nginx/access.log main;
 
-    sendfile        on;
+	sendfile		on;
 
-    server_tokens off;
+	server_tokens off;
 
-    keepalive_timeout  65;
-    tcp_nodelay        on;
+	# strip server detail headers
+	more_clear_headers 'Server';
+	more_clear_headers 'X-Powered-By';
 
-    gzip  on;
+	keepalive_timeout  65;
+	tcp_nodelay		on;
 
-    # Check for pre-gzipped files first
-    gzip_static on;
-    gzip_http_version 1.0;
-    gzip_comp_level 2;
-    gzip_proxied any;
-    gzip_min_length  1100;
-    gzip_buffers 16 8k;
-    gzip_types text/plain text/css application/x-javascript \
-    text/xml application/xml application/xml+rss text/javascript;
-    # Some version of IE 6 don't handle compression well on some mime-types,
-    # so just disable for them
-    gzip_disable "MSIE [1-6].(?!.*SV1)";
-    # Set a vary header so downstream proxies don't send cached gzipped
-    # content to IE6
-    gzip_vary on;
+	gzip  {{ sansible_nginx_gzip }};
 
-    # default proxy settings
-    proxy_redirect off;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header HTTP_AUTHORIZATION $http_authorization;
-    proxy_max_temp_file_size 0;
+	# Check for pre-gzipped files first
+	gzip_static {{ sansible_nginx_gzip_static }};
+	gzip_http_version 1.0;
+	gzip_comp_level {{ sansible_nginx_gzip_comp_level }};
+	gzip_proxied any;
+	gzip_min_length  {{ sansible_nginx_gzip_min_length }};
+	gzip_buffers 16 8k;
+	gzip_types {{ sansible_nginx_gzip_types }};
+	# Some version of IE 6 don't handle compression well on some mime-types,
+	# so just disable for them
+	gzip_disable "MSIE [1-6].(?!.*SV1)";
+	# Set a vary header so downstream proxies don't send cached gzipped
+	# content to IE6
+	gzip_vary {{ sansible_nginx_gzip_vary}};
 
-    server_names_hash_bucket_size 128;
+	# default proxy settings
+	proxy_redirect off;
+	proxy_set_header Host $host;
+	proxy_set_header X-Real-IP $remote_addr;
+	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header HTTP_AUTHORIZATION $http_authorization;
+	proxy_max_temp_file_size 0;
 
-    include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/sites-enabled/*;
+	server_names_hash_bucket_size 128;
+
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
 }
