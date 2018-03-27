@@ -21,7 +21,7 @@ To install run `ansible-galaxy install sansible.nginx` or add this to your
 
 ```YAML
 - name: sansible.nginx
-  version: v1.1
+  version: v2.1
 ```
 
 and run `ansible-galaxy install -p ./roles -r roles.yml`
