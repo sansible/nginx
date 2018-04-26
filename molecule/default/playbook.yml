@@ -4,4 +4,6 @@
   hosts: all
 
   roles:
+    - role: sansible.logrotate
+
     - role: nginx
