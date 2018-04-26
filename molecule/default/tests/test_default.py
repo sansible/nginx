@@ -17,3 +17,11 @@ def test_files(host):
     assert host.file('/etc/nginx/nginx.conf').exists
     assert not host.file('/etc/nginx/sites-enabled/default').exists
     assert host.file('/etc/nginx/includes/nginx_status').exists
+
+
+def test_logrotate(host):
+    with host.sudo():
+        if host.file('/etc/logrotate.d/nginx').is_file:
+            assert 'invoke-rc.d nginx rotate >/dev/null 2>&1' not in host.file(
+                '/etc/logrotate.d/nginx'
+            ).content_string

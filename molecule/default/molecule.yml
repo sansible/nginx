@@ -30,6 +30,8 @@ lint:
 
 dependency:
   name: galaxy
+  options:
+    role-file: requirements.yml
 
 scenario:
   name: default

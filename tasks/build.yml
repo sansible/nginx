@@ -23,3 +23,18 @@
     owner: root
     group: root
     state: directory
+
+- name: Check for existence of logrotate config
+  become: yes
+  stat:
+    path: /etc/logrotate.d/nginx
+  register: sansible_nginx_logrotate_check
+
+- name: Fix logrotate config if required
+  become: yes
+  lineinfile:
+    backrefs: yes
+    dest: /etc/logrotate.d/nginx
+    line: '		service nginx reload >/dev/null 2>&1'
+    regexp: 'invoke-rc.d nginx rotate >\/dev\/null 2>&1'
+  when: sansible_nginx_logrotate_check.stat.exists

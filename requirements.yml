@@ -1,0 +1,4 @@
+---
+
+- src: sansible.logrotate
+  version: v2.0
