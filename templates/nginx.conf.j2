@@ -3,7 +3,6 @@ worker_processes {{ sansible_nginx_worker_processes }};
 worker_rlimit_nofile {{ sansible_nginx_worker_rlimit_nofile }};
 
 error_log  /var/log/nginx/error.log {{ sansible_nginx_log_level }};
-pid		/var/run/sansible_nginx_pid;
 
 include /etc/nginx/modules-enabled/*.conf;
 
