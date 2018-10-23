@@ -8,9 +8,8 @@ platforms:
     image: ubuntu:trusty
   - name: sansible_nginx-xenial
     image: ubuntu:xenial
-# Currently not supported by PPA
-#  - name: sansible_nginx-bionic
-#    image: ubuntu:bionic
+  - name: sansible_nginx-bionic
+    image: ubuntu:bionic
 
 provisioner:
   name: ansible
@@ -31,6 +30,7 @@ lint:
 dependency:
   name: galaxy
   options:
+    ignore-certs: True
     role-file: requirements.yml
 
 scenario:
