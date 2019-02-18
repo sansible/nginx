@@ -1,20 +1,32 @@
 ---
 
-- name: Add Nginx repository
+- name: Download Nginx PGP key (works with Bionic behind a proxy)
+  become: yes
+  get_url:
+    dest: /usr/local/src/nginx.asc
+    mode: 0644
+    url: "https://{{ sansible_nginx_repo_keyserver }}/pks/lookup?op=get&search=0x{{ sansible_nginx_repo_key_id }}"
+
+- name: Ensures Nginx PGP key is known
+  become: yes
+  apt_key:
+    file: /usr/local/src/nginx.asc
+    id: "{{ sansible_nginx_repo_key_id }}"
+    state: present
+
+- name: Add Nginx APT repository
   become: yes
   apt_repository:
-    repo: ppa:nginx/stable
-    state: present
-    validate_certs: no
+    repo: "{{ sansible_nginx_repo }}"
+    update_cache: yes
 
 - name: Ensure latest nginx and supporting packages are installed
   become: yes
   apt:
-    pkg: "{{ item }}"
+    pkg:
+      - "{{ 'nginx=' + sansible_nginx_version if sansible_nginx_version else 'nginx' }}"
+      - "{{ 'nginx-extras=' + sansible_nginx_version if sansible_nginx_version else 'nginx-extras' }}"
     state: present
-  with_items:
-    - "{{ 'nginx=' + sansible_nginx_version if sansible_nginx_version else 'nginx' }}"
-    - "{{ 'nginx-extras=' + sansible_nginx_version if sansible_nginx_version else 'nginx-extras' }}"
 
 - name: Ensure includes folder exists
   become: yes

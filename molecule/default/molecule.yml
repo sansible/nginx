@@ -30,7 +30,6 @@ lint:
 dependency:
   name: galaxy
   options:
-    ignore-certs: True
     role-file: requirements.yml
 
 scenario:

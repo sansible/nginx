@@ -3,14 +3,17 @@
 dependencies: []
 
 galaxy_info:
+  autho: Sansible
   description: nginx installation
   license: MIT
-  min_ansible_version: 2.4
+  min_ansible_version: 2.5
+  min_ansible_container_version: 2.5
   platforms:
     - name: Ubuntu
       versions:
         - trusty
         - xenial
         - bionic
-  categories:
+  galaxy_tags:
     - development
+    - web
