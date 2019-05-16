@@ -5,7 +5,11 @@
   get_url:
     dest: /usr/local/src/nginx.asc
     mode: 0644
-    url: "https://{{ sansible_nginx_repo_keyserver }}/pks/lookup?op=get&search=0x{{ sansible_nginx_repo_key_id }}"
+    url: "{{ sansible_nginx_repo_keyserver }}/pks/lookup?op=get&search=0x{{ sansible_nginx_repo_key_id }}"
+  retries: 2
+  delay: 10
+  register: sansible_nginx_pgp_result
+  until: sansible_nginx_pgp_result is succeeded
 
 - name: Ensures Nginx PGP key is known
   become: yes

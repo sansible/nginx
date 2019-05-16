@@ -13,7 +13,7 @@ sansible_nginx_log_level: error
 sansible_nginx_repo: "deb http://ppa.launchpad.net/nginx/stable/ubuntu
   {{ ansible_distribution_release }} main"
 sansible_nginx_repo_key_id: 00A6F0A3C300EE8C
-sansible_nginx_repo_keyserver: keyserver.ubuntu.com
+sansible_nginx_repo_keyserver: http://eu.pool.sks-keyservers.net
 sansible_nginx_version: ~
 sansible_nginx_worker_connections: 256
 sansible_nginx_worker_processes: 1
