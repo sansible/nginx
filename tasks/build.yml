@@ -51,6 +51,6 @@
   lineinfile:
     backrefs: yes
     dest: /etc/logrotate.d/nginx
-    line: '		service nginx reload >/dev/null 2>&1'
+    line: '		service nginx reload >/dev/null 2>&1' # noqa 203
     regexp: 'invoke-rc.d nginx rotate >\/dev\/null 2>&1'
   when: sansible_nginx_logrotate_check.stat.exists
