@@ -5,9 +5,19 @@ driver:
 
 platforms:
   - name: sansible_nginx-xenial
-    image: ubuntu:xenial
+    image: jrei/systemd-ubuntu:16.04
+    command: /sbin/init
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
   - name: sansible_nginx-bionic
-    image: ubuntu:bionic
+    image: jrei/systemd-ubuntu:18.04
+    command: /sbin/init
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
 provisioner:
   name: ansible
