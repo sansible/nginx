@@ -4,8 +4,6 @@ driver:
   name: docker
 
 platforms:
-  - name: sansible_nginx-trusty
-    image: ubuntu:trusty
   - name: sansible_nginx-xenial
     image: ubuntu:xenial
   - name: sansible_nginx-bionic
@@ -13,19 +11,12 @@ platforms:
 
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 
-lint:
-  name: yamllint
-  options:
-    config-data:
-      extends: default
-      ignore: .venv_ansible*
-      rules:
-        line-length:
-          max: 159
-        truthy: disable
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8 molecule/
 
 dependency:
   name: galaxy
@@ -37,5 +28,3 @@ scenario:
 
 verifier:
   name: testinfra
-  lint:
-    name: flake8
