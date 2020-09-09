@@ -1,6 +1,8 @@
 ---
 
 sansible_nginx_access_log_format: json  # either 'standard' or 'json'
+sansible_nginx_client_body_timeout: 12
+sansible_nginx_client_header_timeout: 12
 sansible_nginx_gzip: "on"
 sansible_nginx_gzip_comp_level: 2
 sansible_nginx_gzip_min_length: 1100
@@ -9,12 +11,14 @@ sansible_nginx_gzip_types: >
     text/plain text/css application/x-javascript
     text/xml application/xml application/xml+rss text/javascript
 sansible_nginx_gzip_vary: "on"
+sansible_nginx_keepalive_timeout: 15
 sansible_nginx_log_level: error
 sansible_nginx_repo: "deb http://ppa.launchpad.net/nginx/stable/ubuntu
   {{ ansible_distribution_release }} main"
 sansible_nginx_repo_key_id: 00A6F0A3C300EE8C
 sansible_nginx_repo_keyserver: https://keyserver.ubuntu.com
+sansible_nginx_send_timeout: 10
 sansible_nginx_version: ~
-sansible_nginx_worker_connections: 256
-sansible_nginx_worker_processes: 1
+sansible_nginx_worker_connections: 1024
+sansible_nginx_worker_processes: auto
 sansible_nginx_worker_rlimit_nofile: 4096

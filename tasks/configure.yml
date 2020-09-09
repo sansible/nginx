@@ -1,5 +1,22 @@
 ---
 
+- name: Set max open files for nginx service
+  become: yes
+  ini_file:
+    option: LimitNOFILE
+    path: /etc/systemd/system/nginx.service.d/override.conf
+    section: Service
+    value: "{{ sansible_nginx_worker_rlimit_nofile }}"
+  register: sansible_nginx_systemd_conf_file
+
+- name: Ensure nginx service is updated
+  become: yes
+  systemd:
+    daemon_reload: yes
+  when: sansible_nginx_systemd_conf_file.changed
+  tags:
+    - skip_ansible_lint
+
 - name: Configure nginx service
   become: yes
   template:

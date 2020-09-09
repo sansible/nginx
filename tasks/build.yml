@@ -32,13 +32,16 @@
       - "{{ 'nginx-extras=' + sansible_nginx_version if sansible_nginx_version else 'nginx-extras' }}"
     state: present
 
-- name: Ensure includes folder exists
+- name: Ensure includes and systemd override folders exist
   become: yes
   file:
-    name: /etc/nginx/includes
+    name: "{{ item }}"
     owner: root
     group: root
     state: directory
+  loop:
+    - /etc/nginx/includes
+    - /etc/systemd/system/nginx.service.d
 
 - name: Check for existence of logrotate config
   become: yes
