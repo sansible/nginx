@@ -1,15 +1,17 @@
 ---
 
+- name: check if Nginx PGP key file exists
+  stat:
+    path: /usr/local/src/nginx.asc
+  register: sansible_nginx_pgp_key_file
+
 - name: Download Nginx PGP key (works with Bionic behind a proxy)
   become: yes
   get_url:
     dest: /usr/local/src/nginx.asc
     mode: 0644
     url: "{{ sansible_nginx_repo_keyserver }}/pks/lookup?op=get&search=0x{{ sansible_nginx_repo_key_id }}"
-  retries: 2
-  delay: 10
-  register: sansible_nginx_pgp_result
-  until: sansible_nginx_pgp_result is succeeded
+  when: not sansible_nginx_pgp_key_file.stat.exists
 
 - name: Ensures Nginx PGP key is known
   become: yes
