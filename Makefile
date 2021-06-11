@@ -1,4 +1,4 @@
-ANSIBLE_INSTALL_VERSION ?= 2.9.13
+ANSIBLE_INSTALL_VERSION ?= 2.9.16
 PATH := $(PWD)/.venv_ansible$(ANSIBLE_INSTALL_VERSION)/bin:$(shell printenv PATH)
 SHELL := env PATH=$(PATH) /bin/bash
 

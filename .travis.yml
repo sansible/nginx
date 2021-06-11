@@ -3,7 +3,8 @@
 group: stable
 dist: bionic
 
-sudo: required
+os:
+  - linux
 
 language: python
 python:
@@ -16,15 +17,14 @@ branches:
     - master
 
 env:
-  - ANSIBLE_INSTALL_VERSION=2.8.15
-  - ANSIBLE_INSTALL_VERSION=2.9.13
+  - ANSIBLE_INSTALL_VERSION=2.8.18
+  - ANSIBLE_INSTALL_VERSION=2.9.16
 
 services:
   - docker
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-ce
+  - echo "ht3M_L!Td4i:y6m" | docker login -u "smartshopdocker" --password-stdin
 
 install:
   - make deps
