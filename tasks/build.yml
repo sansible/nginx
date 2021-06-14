@@ -41,6 +41,7 @@
     owner: root
     group: root
     state: directory
+    mode: 0644
   loop:
     - /etc/nginx/includes
     - /etc/systemd/system/nginx.service.d
