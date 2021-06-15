@@ -17,14 +17,17 @@ branches:
     - master
 
 env:
-  - ANSIBLE_INSTALL_VERSION=2.8.18
-  - ANSIBLE_INSTALL_VERSION=2.9.16
-
+  matrix:
+    - ANSIBLE_INSTALL_VERSION=2.8.18
+    - ANSIBLE_INSTALL_VERSION=2.9.16
+  global:
+# yamllint disable-line rule:line-length
+    secure: "OJhhbS4KqxHxfBFYhM8SSuryX9pLyV35JCYdNpjk9JROO0ouybySBr8l65+YRv9GdbOg//Cy6F4mwm7vS20dY6IM2u0zUQdUNH0CTKMF29R10N50nwyb818u3Z9ZRoCeBNhxrPH6i+RrQ2++YA7Iwj43OkJunr9QGS4FgvW5WzzjB+rXi0g1Z7k+6RSstR4I99/QOxX3WHuMjUB35Ago5JPLw0q8aSZcryMby+JlvQ0aA5LGxFAxb3rvfvaw98mgsQZyV+24fqw1ZFV8j1IzqMgkIWwNgA5fXlAqORG5wSaEHm7ES02p13RhSBaKL34IM5XXo83sAcHgtiC20S1q54uMZNh0PCCUDuTwyTCbCF1E5SNOz2+fP6u7FbviFmQKUcp1tUdBAd/oycz1ayoLybKRBIuK5d3zfq4X7vrJqMl3d5zKFPQ2Ii3YGw6lTaDxYuzWARwa80v2cdX3xpB5zEREqAGmIQc1h1Y3haSQIVJaxHb3kFTknj0ok2ASI3fM4oyuD9ZisWiXjLU3vMiToywqR1uCTCEvsUl+/tQEdpADXtd8Mc1KNCdchqb7/764ghan8tA6E+POdFEMkz5vnBAWJ9s/MHfCyeCOinSzM8lonKiej6ghOPzsmghhGTJGiYMb/jS/75Rjggym29ls6M4Oaudkr5OF2g6ggQ0fT7E="
 services:
   - docker
 
 before_install:
-  - echo "ht3M_L!Td4i:y6m" | docker login -u "smartshopdocker" --password-stdin
+  - echo "${DOCKER_PW}" | docker login -u "smartshopdocker" --password-stdin
 
 install:
   - make deps
